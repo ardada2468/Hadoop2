@@ -15,6 +15,9 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  * TO RUN
  *  swich user to hdoop
  *  Remove previos output data or change path
+ *  hadoop fs -rm /WordCountTutorial/Output/_SUCCESS
+ *  hadoop fs -rm /WordCountTutorial/Output/part-r-00000
+ *   hadoop fs -rm -r /WordCountTutorial/Output/
  *  hadoop jar '/home/arnavdadarya/IdeaProjects/Hadoop2/out/artifacts/Hadoop2_jar/Hadoop2.jar' /WordCountTutorial/Input /WordCountTutorial/Output
  */
 
