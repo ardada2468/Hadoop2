@@ -1,6 +1,8 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+import jdk.nashorn.internal.parser.Token;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -22,6 +24,28 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  */
 
 public class WordCount {
+    static ArrayList<Character> punctuation = new ArrayList<>();
+    static {
+        punctuation.add('\'');
+        punctuation.add('{');
+        punctuation.add('}');
+        punctuation.add('(');
+        punctuation.add(')');
+        punctuation.add('<');
+        punctuation.add('>');
+        punctuation.add(':');
+        punctuation.add(',');
+        punctuation.add('-');
+        punctuation.add('\"');
+        punctuation.add('?');
+        punctuation.add('.');
+        punctuation.add('!');
+        punctuation.add('_');
+        punctuation.add(']');
+        punctuation.add('[');
+
+    }
+
 
     public static class TokenizerMapper
             extends Mapper<Object, Text, Text, IntWritable>{
@@ -34,10 +58,24 @@ public class WordCount {
         ) throws IOException, InterruptedException {
             StringTokenizer itr = new StringTokenizer(value.toString());
             while (itr.hasMoreTokens()) {
-                word.set(itr.nextToken());
+                word.set(removePunctuation(itr.nextToken()));
                 context.write(word, one);
             }
         }
+    }
+
+    public static String removePunctuation(String x){
+        char[] chars = x.toCharArray();
+        String Returnable = "";
+        for (int i = 0; i < chars.length; i++) {
+
+            if(!punctuation.contains((chars[i]))){
+                Returnable+=String.valueOf(chars[i]);
+            }else {
+                Returnable+="";
+            }
+        }
+        return Returnable;
     }
 
     public static class IntSumReducer
