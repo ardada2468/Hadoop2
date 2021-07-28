@@ -66,16 +66,16 @@ public class WordCount {
 
     public static String removePunctuation(String x){
         char[] chars = x.toCharArray();
-        String Returnable = "";
+        StringBuilder Returnable = new StringBuilder();
         for (int i = 0; i < chars.length; i++) {
 
             if(!punctuation.contains((chars[i]))){
-                Returnable+=String.valueOf(chars[i]);
+                Returnable.append(String.valueOf(chars[i]));
             }else {
-                Returnable+="";
+                Returnable.append("");
             }
         }
-        return Returnable;
+        return Returnable.toString();
     }
 
     public static class IntSumReducer
